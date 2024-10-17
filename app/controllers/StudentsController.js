@@ -9,16 +9,14 @@ import {TokenEncode} from "../utility/tokenUtility.js";
 
 export const Registration=async(req,res)=>{
 
-    //try {
-       // let reqBody=req.body;
-       // await StudentsModel.create(reqBody)
+    try {
+       let reqBody=req.body;
+       await StudentsModel.create(reqBody)
         return res.json({status:"success","Message":"Student registered successful"})
-    //}
-    //catch (e) {
-       // return res.json({status:"fail","Message":e.toString()})
     }
-
-
+    catch (e) {
+        return res.json({status:"fail","Message":e.toString()})
+    }
 
 
 
@@ -26,7 +24,8 @@ export const Registration=async(req,res)=>{
 //Student Login
 
 export const Login=async(req,res)=>{
-    /*try {
+
+    try {
         let reqBody=req.body;
         let data=await StudentsModel.findOne(reqBody)
 
@@ -41,9 +40,10 @@ export const Login=async(req,res)=>{
     }
     catch (e) {
         return res.json({status:"fail","Message":e.toString()})
-    }*/
+    }
         return res.json({status:"success","Message":"Student login successful"})
 }
+
 
 
 
@@ -52,14 +52,14 @@ export const Login=async(req,res)=>{
 //Student Read Profile 
 
 export const ReadProfile=async(req,res)=>{
-   /* try {
+   try {
         let user_id=req.headers['user_id']
         let data=await StudentsModel.findOne({"_id":user_id})
         return res.json({status:"success",message:"Student profile Read successful",data:data})
     }
     catch (e) {
         return res.json({status:"fail","Message":e.toString()})
-    }*/
+    }
         return res.json({status:"success",message:"Student profile Read successful"})
 }
 
@@ -71,19 +71,14 @@ export const ReadProfile=async(req,res)=>{
 //Student Update Profile 
 
 export const UpdateProfile=async(req,res)=>{
-   // try {
-       // let reqBody=req.body;
-       // let user_id=req.headers['user_id']
-       // await StudentsModel.updateOne({"_id":user_id},reqBody)
+    try {
+       let reqBody=req.body;
+       let user_id=req.headers['user_id']
+       await StudentsModel.updateOne({"_id":user_id},reqBody)
         return res.json({status:"success","Message":"Student Profile Update successfully"})
-   // }
-   // catch (e) {
-       // return res.json({status:"fail","Message":e.toString()})
-   // }
+   }
+    catch (e) {
+        return res.json({status:"fail","Message":e.toString()})
+    }
 }
-
-
-
-
-
 
