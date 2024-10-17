@@ -29,19 +29,27 @@ export const Login=async(req,res)=>{
         let reqBody=req.body;
         let data=await StudentsModel.findOne(reqBody)
 
-        if(data==null){
-            return res.json({status:"fail","Message":"User not found"})
-        }
-        else{
-            // Login Success
-            let token=TokenEncode(data['email'],data['_id'])
-            return res.json({status:"success","Message":"Student login successful",data:{token:token}})
-        }
+        if(data){
+            let token = TokenEncode(data['email'],data['_id'])
+            console.log(data['email'],data['_id']);
+            
+            console.log(token)
+      
+            let options = {
+              limit : 30*24*60*60*1000,
+              httpOnly:true,
+              sameSite:"none",
+              secure:true,
+            }
+            res.cookie('token',token,options)
+            res.json({status:200,message:'success',data:data,token:token}) 
+        } else{
+            res.json({status:'failed',message:'user not found'}) 
     }
     catch (e) {
         return res.json({status:"fail","Message":e.toString()})
     }
-        return res.json({status:"success","Message":"Student login successful"})
+
 }
 
 
@@ -60,7 +68,7 @@ export const ReadProfile=async(req,res)=>{
     catch (e) {
         return res.json({status:"fail","Message":e.toString()})
     }
-        return res.json({status:"success",message:"Student profile Read successful"})
+       
 }
 
 
